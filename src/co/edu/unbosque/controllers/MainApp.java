@@ -1,11 +1,12 @@
 package co.edu.unbosque.controllers;
 
 import co.edu.unbosque.views.ConsoleView;
+import co.edu.unbosque.views.MainView;
 
 public class MainApp {
 
 	private ConsoleView consoleView;
-
+	private MainView mainView;
 	private Controller controller;
 
 	public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class MainApp {
 	}
 
 	private void initializeViews() {
-		consoleView = new ConsoleView();
+		mainView = new MainView();
 	}
 
 	private void initializeModels() {
@@ -36,7 +37,7 @@ public class MainApp {
 	}
 
 	private void setViewsToControllers() {
-		controller.setConsoleView(consoleView);
+		controller.setMainView(mainView);
 	}
 
 	private void setModelsToControllers() {

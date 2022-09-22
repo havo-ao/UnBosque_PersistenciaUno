@@ -4,18 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.edu.unbosque.views.ConsoleView;
+import co.edu.unbosque.views.MainView;
 
 public class Controller implements ActionListener {
 
-	ConsoleView consoleView;
+	private ConsoleView consoleView;
+	private MainView mainView;
 
 	public Controller() {
 
 	}
 
 	public void start() {
-		consoleView.print("Running controller...");
-
+		mainView = new MainView();
 		addListeners();
 	}
 
@@ -30,6 +31,14 @@ public class Controller implements ActionListener {
 
 	public void setConsoleView(ConsoleView consoleView) {
 		this.consoleView = consoleView;
+	}
+
+	public MainView getMainView() {
+		return mainView;
+	}
+
+	public void setMainView(MainView mainView) {
+		this.mainView = mainView;
 	}
 
 }
