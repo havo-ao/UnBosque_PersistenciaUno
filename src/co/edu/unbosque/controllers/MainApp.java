@@ -23,7 +23,6 @@ public class MainApp {
 		controller.start();
 	}
 
-
 	private void initializeModels() {
 
 	}
