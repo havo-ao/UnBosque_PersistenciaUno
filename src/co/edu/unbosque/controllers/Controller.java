@@ -2,7 +2,9 @@ package co.edu.unbosque.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import co.edu.unbosque.models.FileLoader;
 import co.edu.unbosque.views.ConsoleView;
 import co.edu.unbosque.views.MainView;
 
@@ -10,6 +12,7 @@ public class Controller implements ActionListener {
 
 	private ConsoleView consoleView;
 	private MainView mainView;
+	private FileLoader file;
 
 	public Controller() {
 
@@ -21,11 +24,29 @@ public class Controller implements ActionListener {
 	}
 
 	private void addListeners() {
+		mainView.getLoadFileBtn().addActionListener(this);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+
+		if (command.equals("LOAD")) {
+			System.out.println("Loading file ...");
+			file = new FileLoader(mainView.openFileFromFileSystem());
+			try {
+				String fileText = file.readFile();
+				mainView.getSearchPanel().getFileTxtArea().setText(fileText);
+				System.out.println(fileText);
+			} catch (IOException IOEx) {
+				IOEx.printStackTrace();
+				mainView.showErrorMessage("Unable to read the selected file.");
+			} catch (NullPointerException NPEx) {
+				NPEx.printStackTrace();
+				mainView.showInfoMessage("No file was selected.");
+			}
+		}
 
 	}
 
