@@ -14,7 +14,6 @@ public class MainApp {
 	}
 
 	private void start() {
-		initializeViews();
 		initializeModels();
 		initializeControllers();
 
@@ -22,10 +21,6 @@ public class MainApp {
 		setModelsToControllers();
 
 		controller.start();
-	}
-
-	private void initializeViews() {
-		mainView = new MainView();
 	}
 
 	private void initializeModels() {
