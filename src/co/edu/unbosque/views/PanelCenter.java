@@ -7,14 +7,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
-public class SearchPanel extends JPanel {
+public class PanelCenter extends JPanel {
 	private JTextArea fileTxtArea;
 
-	public SearchPanel() {
+	public PanelCenter() {
 		setLayout(new BorderLayout());
-		setBorder(new TitledBorder("Archivo: "));
-
+		setBorder(new TitledBorder("...FILE..."));
 		initializeComponent();
+		setVisible(true);
+		
 	}
 
 	private void initializeComponent() {

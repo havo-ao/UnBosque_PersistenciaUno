@@ -24,7 +24,7 @@ public class Controller implements ActionListener {
 	}
 
 	private void addListeners() {
-		mainView.getLoadFileBtn().addActionListener(this);
+		mainView.getPNorth().getLoadFileBtn().addActionListener(this);
 
 	}
 
@@ -37,7 +37,7 @@ public class Controller implements ActionListener {
 			file = new FileLoader(mainView.openFileFromFileSystem());
 			try {
 				String fileText = file.readFile();
-				mainView.getSearchPanel().getFileTxtArea().setText(fileText);
+				mainView.getPcenter().getFileTxtArea().setText(fileText);
 				System.out.println(fileText);
 			} catch (IOException IOEx) {
 				IOEx.printStackTrace();
