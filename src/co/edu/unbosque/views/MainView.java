@@ -4,15 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.File;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class MainView extends JFrame {
-	private SearchPanel searchPanel;
-	private JButton loadFileBtn; // Dummy btn for testing
+	private PanelCenter Pcenter;
+	private PanelSouth PSouth;
+	private PanelNorth PNorth;
 
 	public MainView() {
 		setTitle("Buscador de palabras");
@@ -20,6 +19,7 @@ public class MainView extends JFrame {
 		setResizable(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBackground(Color.white);
 		getContentPane().setLayout(new BorderLayout(5, 5));
 		getContentPane().setBackground(new Color(255, 255, 255));
 
@@ -29,14 +29,15 @@ public class MainView extends JFrame {
 	}
 
 	private void initializeComponents() {
-		JPanel aux = new JPanel();
-		loadFileBtn = new JButton("Cargar archivo");
-		loadFileBtn.setActionCommand("LOAD");
-		aux.add(loadFileBtn);
-		getContentPane().add(aux, BorderLayout.NORTH);
+
+		Pcenter = new PanelCenter();
+		getContentPane().add(Pcenter, BorderLayout.CENTER);
 		
-		searchPanel = new SearchPanel();
-		getContentPane().add(searchPanel, BorderLayout.CENTER);
+		PSouth = new PanelSouth();
+		getContentPane().add(PSouth, BorderLayout.SOUTH);
+		
+		PNorth = new PanelNorth();
+		getContentPane().add(PNorth, BorderLayout.NORTH);
 
 	}
 	
@@ -58,25 +59,32 @@ public class MainView extends JFrame {
 		JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public SearchPanel getSearchPanel() {
-		return searchPanel;
+	public PanelCenter getPcenter() {
+		return Pcenter;
 	}
 
-	public void setSearchPanel(SearchPanel searchPanel) {
-		this.searchPanel = searchPanel;
+	public void setPcenter(PanelCenter pcenter) {
+		Pcenter = pcenter;
+	}
+
+	public PanelSouth getPSouth() {
+		return PSouth;
+	}
+
+	public void setPSouth(PanelSouth pSouth) {
+		PSouth = pSouth;
+	}
+
+	public PanelNorth getPNorth() {
+		return PNorth;
+	}
+
+	public void setPNorth(PanelNorth pNorth) {
+		PNorth = pNorth;
 	}
 
 	/**
 	 * @return the loadFileBtn
 	 */
-	public JButton getLoadFileBtn() {
-		return loadFileBtn;
-	}
-
-	/**
-	 * @param loadFileBtn the loadFileBtn to set
-	 */
-	public void setLoadFileBtn(JButton loadFileBtn) {
-		this.loadFileBtn = loadFileBtn;
-	}
+	
 }
