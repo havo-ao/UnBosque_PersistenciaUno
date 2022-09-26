@@ -5,10 +5,11 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.border.TitledBorder;
 
 public class PanelCenter extends JPanel {
-	private JTextArea fileTxtArea;
+	private JTextPane fileTxtArea;
 
 	public PanelCenter() {
 		setLayout(new BorderLayout());
@@ -19,7 +20,7 @@ public class PanelCenter extends JPanel {
 	}
 
 	private void initializeComponent() {
-		fileTxtArea = new JTextArea();
+		fileTxtArea = new JTextPane();
 		fileTxtArea.setEditable(false);
 
 		JScrollPane aux = new JScrollPane(fileTxtArea);
@@ -27,11 +28,11 @@ public class PanelCenter extends JPanel {
 
 	}
 
-	public JTextArea getFileTxtArea() {
+	public JTextPane getFileTxtArea() {
 		return fileTxtArea;
 	}
 
-	public void setFileTxtArea(JTextArea fileTxtArea) {
+	public void setFileTxtArea(JTextPane fileTxtArea) {
 		this.fileTxtArea = fileTxtArea;
 	}
 
