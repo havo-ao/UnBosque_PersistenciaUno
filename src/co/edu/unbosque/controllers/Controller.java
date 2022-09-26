@@ -33,42 +33,45 @@ public class Controller implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-
 		if (command.equals("LOAD")) {
 			consoleView.print("Loading file ...");
-			file = new FileLoader(mainView.openFileFromFileSystem());
 			try {
-				String fileText = file.readFile();
-				mainView.getPcenter().getFileTxtArea().setText(fileText);
-				consoleView.print(fileText);
+				file = new FileLoader(mainView.openFileFromFileSystem());
+				String ext = file.getFile().getName().split("\\.")[1];
+				if (ext.equals("txt") || ext.equals("TXT")) {
+					String fileText = file.readFile();
+					mainView.getPcenter().getFileTxtArea().setText(fileText);
+				} else {
+					mainView.showErrorMessage("Invalid file extension. Must be txt file.");
+				}
 			} catch (IOException IOEx) {
 				IOEx.printStackTrace();
 				mainView.showErrorMessage("Unable to read the selected file.");
 			} catch (NullPointerException NPEx) {
 				NPEx.printStackTrace();
 				mainView.showInfoMessage("No file was selected.");
+			} catch (IndexOutOfBoundsException IOBEx) {
+				IOBEx.printStackTrace();
+				mainView.showInfoMessage("Unable to get file extension.");
 			}
-		} else if(command.equals("searching")) {
+		} else if (command.equals("searching")) {
 			consoleView.print("Searching string in file...");
-			
 			try {
 				if (file.getFileText() == null) {
 					mainView.showErrorMessage("No file was selected. Please choose a file before seaching for a text.");
 				} else {
 					String searchText = mainView.getPSouth().getText1().getText();
-					
+
 					// PUT SEARCH LOGIC HERE
-					
+
 					consoleView.print("Text to search: " + searchText);
 					consoleView.print("Filetext from search btn: \n" + file.getFileText());
-					
 				}
 			} catch (NullPointerException e2) { // ADD REQUIRED EXCEPTIONS
 				e2.printStackTrace();
 				mainView.showErrorMessage("No file has been chosen. Please, select a file before searching for a text");
 			}
 		}
-
 	}
 
 	public void setConsoleView(ConsoleView consoleView) {
