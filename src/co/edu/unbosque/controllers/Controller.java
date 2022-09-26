@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import co.edu.unbosque.models.BoyerMoore;
 import co.edu.unbosque.models.FileLoader;
 import co.edu.unbosque.views.ConsoleView;
 import co.edu.unbosque.views.MainView;
@@ -13,6 +14,8 @@ public class Controller implements ActionListener {
 	private ConsoleView consoleView;
 	private MainView mainView;
 	private FileLoader file;
+	private BoyerMoore boyerMoore;
+	private int numberOfTextRepetitions = 0;
 
 	public Controller() {
 
@@ -21,6 +24,8 @@ public class Controller implements ActionListener {
 	public void start() {
 		mainView = new MainView();
 		consoleView = new ConsoleView();
+		boyerMoore = new BoyerMoore();
+
 		addListeners();
 	}
 
@@ -37,37 +42,89 @@ public class Controller implements ActionListener {
 		if (command.equals("LOAD")) {
 			consoleView.print("Loading file ...");
 			file = new FileLoader(mainView.openFileFromFileSystem());
+
 			try {
+
 				String fileText = file.readFile();
 				mainView.getPcenter().getFileTxtArea().setText(fileText);
 				consoleView.print(fileText);
+
 			} catch (IOException IOEx) {
+
 				IOEx.printStackTrace();
 				mainView.showErrorMessage("Unable to read the selected file.");
+
 			} catch (NullPointerException NPEx) {
+
 				NPEx.printStackTrace();
 				mainView.showInfoMessage("No file was selected.");
 			}
-		} else if(command.equals("searching")) {
+		} else if (command.equals("searching")) {
 			consoleView.print("Searching string in file...");
-			
+
 			try {
+
 				if (file.getFileText() == null) {
 					mainView.showErrorMessage("No file was selected. Please choose a file before seaching for a text.");
 				} else {
 					String searchText = mainView.getPSouth().getText1().getText();
-					
-					// PUT SEARCH LOGIC HERE
-					
-					consoleView.print("Text to search: " + searchText);
-					consoleView.print("Filetext from search btn: \n" + file.getFileText());
-					
+
+					findText(file.getFileText(), searchText);
+
+					// consoleView.print("Text to search: " + searchText);
+					// consoleView.print("Filetext from search btn: \n" + file.getFileText());
+					consoleView.print("Number of text repetitions: " + numberOfTextRepetitions);
 				}
+
 			} catch (NullPointerException e2) { // ADD REQUIRED EXCEPTIONS
 				e2.printStackTrace();
 				mainView.showErrorMessage("No file has been chosen. Please, select a file before searching for a text");
 			}
 		}
+
+	}
+
+	public void findText(String completeText, String textToFind) {
+		char[] text = completeText.toCharArray();
+		char[] pattern = textToFind.toCharArray();
+
+		int textLength = text.length;
+		int patternLength = pattern.length;
+		int numberRepetitions = 0;
+
+		boolean isActiveSearch = true;
+
+		do {
+
+			int pos = boyerMoore.indexOf(text, pattern);
+
+			if (pos == -1)
+				isActiveSearch = false;
+			else {
+				int newTextLength = textLength - pos - patternLength + 1;
+				char[] newText = new char[newTextLength];
+				int newTextIndex = 0;
+
+				for (int index = 0; index <= textLength; index++) {
+					if (index > pos) {
+						newText[newTextIndex] = text[index];
+						newTextIndex += 1;
+					}
+
+				}
+
+				text = newText;
+				textLength = newTextLength;
+				consoleView.print("Pattern found at position : " + pos);
+				numberRepetitions += 1;
+
+				// Actions to hover text
+			}
+
+		} while (isActiveSearch);
+
+		if (numberRepetitions > 0)
+			numberOfTextRepetitions = numberRepetitions;
 
 	}
 
