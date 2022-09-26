@@ -21,4 +21,12 @@ public class FileLoader {
 		return this.fileText;
 	}
 
+	public String getFileText() {
+		return fileText;
+	}
+
+	public void setFileText(String fileText) {
+		this.fileText = fileText;
+	}
+
 }
