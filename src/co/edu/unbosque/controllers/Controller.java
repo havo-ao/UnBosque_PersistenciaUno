@@ -21,7 +21,7 @@ public class Controller implements ActionListener {
 	private MainView mainView;
 	private FileLoader file;
 	private BoyerMoore boyerMoore;
-	private int numberOfTextRepetitions = 0;
+	private int numberOfTextRepetitions;
 
 	public Controller() {
 
@@ -48,23 +48,26 @@ public class Controller implements ActionListener {
 
 		if (command.equals("LOAD")) {
 			consoleView.print("Loading file ...");
-			file = new FileLoader(mainView.openFileFromFileSystem());
-
 			try {
-				fileText = file.readFile();
-
-				mainView.getPcenter().getFileTxtArea().setText(fileText);
-				consoleView.print(fileText);
-
+				file = new FileLoader(mainView.openFileFromFileSystem());
+				String[] ext = file.getFile().getName().split("\\.");
+				if (ext[ext.length - 1].equals("txt") || ext[ext.length - 1].equals("TXT")) {
+					fileText = file.readFile();
+					mainView.getPcenter().getFileTxtArea().setText(fileText);
+					consoleView.print(fileText);
+				} else {
+					mainView.showErrorMessage("Invalid file extension. Must be txt file.");
+				}
 			} catch (IOException IOEx) {
-
 				IOEx.printStackTrace();
 				mainView.showErrorMessage("Unable to read the selected file.");
 
 			} catch (NullPointerException NPEx) {
-
 				NPEx.printStackTrace();
 				mainView.showInfoMessage("No file was selected.");
+			} catch (IndexOutOfBoundsException IOBEx) {
+				IOBEx.printStackTrace();
+				mainView.showInfoMessage("Unable to get file extension.");
 			}
 
 		} else if (command.equals("searching")) {
@@ -80,17 +83,16 @@ public class Controller implements ActionListener {
 						mainView.showErrorMessage("Por favor ingrese un valor");
 
 					} else {
+						numberOfTextRepetitions = 0;
 						findText(file.getFileText(), searchText);
 
-						// consoleView.print("Text to search: " + searchText);
-						// consoleView.print("Filetext from search btn: \n" + file.getFileText());
 						consoleView.print("Number of text repetitions: " + numberOfTextRepetitions);
 						mainView.showInfoMessage("Coincidencias encontradas: " + numberOfTextRepetitions);
 					}
 
 				}
 
-			} catch (NullPointerException e2) { // ADD REQUIRED EXCEPTIONS
+			} catch (NullPointerException e2) {
 				e2.printStackTrace();
 				mainView.showErrorMessage("No file has been chosen. Please, select a file before searching for a text");
 
