@@ -52,6 +52,7 @@ public class Controller implements ActionListener {
 
 			try {
 				fileText = file.readFile();
+
 				mainView.getPcenter().getFileTxtArea().setText(fileText);
 				consoleView.print(fileText);
 
@@ -67,8 +68,6 @@ public class Controller implements ActionListener {
 			}
 
 		} else if (command.equals("searching")) {
-
-			consoleView.print("Searching string in file...");
 
 			try {
 
@@ -121,16 +120,13 @@ public class Controller implements ActionListener {
 
 		int initialPosition = 0;
 
-		// mainView.getPcenter().getFileTxtArea().getHighlighter().addHighlight(0,
-		// textLength, defaultPainter);
-
 		do {
 
 			int pos = boyerMoore.indexOf(text, pattern);
 
 			if (pos == -1) {
 				isActiveSearch = false;
-				
+
 			} else {
 
 				absoluteIndex += pos;
